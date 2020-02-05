@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {% block titlePage %}{% endblock titlePage %}
+
+    <link rel="stylesheet" href="/bundle.css">
+  </head>
+  <body style="justify-content: flex-start">
+    <div class="messages">
+      {% if message.err %}
+        <div class="messages__box messages--err">{{ message.err }}</div>
+      {% endif %}
+
+      {% if message.sucess %}
+        <div class="messages__box messages--sucess">{{ message.sucess }}</div>
+      {% endif %}
+    </div>
+    <header class="session-header container">
+      <a href="/">
+        <img src="/assets/logo.png" alt="">
+      </a>
+    </header>
+    <main class="session-main container">
+      {% block content %}{% endblock content %}
+    </main>
+
+    <script src="/bundle.js"></script>
+  </body>
+</html>

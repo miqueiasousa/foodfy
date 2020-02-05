@@ -1,0 +1,24 @@
+.messages {
+  position: absolute;
+  top: 0.75rem;
+  right: 1.13rem;
+
+  &__box {
+    max-width: 23rem;
+    min-width: 20rem;
+    margin-bottom: 0.75rem;
+    padding: 3.44rem 2.75rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+  }
+
+  &--err {
+    background-color: $err-color;
+    color: white;
+  }
+
+  &--sucess {
+    background-color: $sucess-color;
+    color: white;
+  }
+}

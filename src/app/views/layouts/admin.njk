@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    {% block titlePage %}{% endblock titlePage %}
+
+    <link rel="stylesheet" href="/bundle.css">
+  </head>
+  <body>
+    <header class="header-container--bg">
+      <div class="header-container container">
+        <div class="logo">
+          <a href="/admin" class="logo__link">
+            <img src="/assets/logo-adm.png" alt="Logo Foodfy">
+          </a>
+        </div>
+        <div class="menu-primary">
+          <nav>
+            <ul class="menu">
+              <li class="menu__item menu__item--admin">
+                <a href="/admin/recipes">RECEITAS</a>
+              </li>
+              <li class="menu__item menu__item--admin">
+                <a href="/admin/chefs">CHEFS</a>
+              </li>
+              <li class="menu__item menu__item--admin">
+                <a href="/admin/users">USUÁRIOS</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    {% block content %}{% endblock content %}
+
+    <script src="/bundle.js"></script>
+  </body>
+</html>

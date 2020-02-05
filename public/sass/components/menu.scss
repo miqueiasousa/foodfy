@@ -1,0 +1,42 @@
+.menu {
+  display: flex;
+
+  &__item {
+    &:not(:last-child) {
+      margin-right: 1.48rem;
+    }
+
+    & a {
+      padding: 0.4rem;
+      color: $secondary-color;
+      transition: text-shadow 100ms ease-in;
+    }
+
+    & a:hover {
+      text-shadow: 0 0 0.6px #000, 0 0 0.6px #000;
+    }
+
+    &--active {
+      text-shadow: 0 0 0.6px #000, 0 0 0.6px #000;
+    }
+
+    &--admin a {
+      font-weight: 700;
+      color: $gray-light;
+    }
+
+    &--admin a:hover {
+      color: #fff;
+      text-shadow: 0 0 0.6px #fff, 0 0 0.6px #fff;
+    }
+
+    &--admin.menu__item--active a {
+      color: #fff;
+      text-shadow: 0 0 0.6px #fff, 0 0 0.6px #fff;
+    }
+
+    &--admin.menu__item--active {
+      text-shadow: 0 0 0.6px #fff, 0 0 0.6px #fff;
+    }
+  }
+}

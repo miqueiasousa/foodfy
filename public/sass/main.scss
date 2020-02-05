@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+
+@import './settings/variables.scss';
+
+@import './generic/reset.scss';
+
+@import './base/base.scss';
+
+@import './objects/objects.scss';
+
+@import './components/header-container.scss';
+@import './components/logo.scss';
+@import './components/menu.scss';
+@import './components/footer-container.scss';
+@import './components/session-header.scss';
+@import './components/session-main.scss';
+@import './components/session-form.scss';
+@import './components/form-actions.scss';
+@import './components/messages.scss';
+
+@import './trumps/trumps.scss';
