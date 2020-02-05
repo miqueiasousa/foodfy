@@ -1,0 +1,30 @@
+{% extends 'layouts/session.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="session-form">
+    <h1 class="session-form__title">Iniciar Sessão</h1>
+    <form action="/admin/users/login" method="post" id="login">
+      <div class="session-form__field">
+        <label for="email">Email</label>
+        <input type="text" name="email" value="{{ email }}" id="email" placeholder="Digite seu email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+      </div>
+      <div class="session-form__field">
+        <label for="password">Senha</label>
+        <input type="password" name="password" value="{{ password }}" id="password" placeholder="Digite sua senha" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-z\d]{6,}$">
+      </div>
+    </form>
+    <div class="form-actions">
+      <div class="form-actions__forgot-password">
+        <a href="/admin/users/fogot-password">Perdeu a senha?</a>
+      </div>
+      <div class="form-actions__btn-submit">
+        <button type="submit" value="login-submit" form="login" id="form-login" submit="a(event)">Acessar</button>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
