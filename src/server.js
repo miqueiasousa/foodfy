@@ -17,6 +17,7 @@ nunjucks.configure(path.resolve(__dirname, 'app', 'views'), {
 app.set('view engine', '.njk');
 
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
