@@ -33,5 +33,6 @@ module.exports = {
       filename: 'bundle.css',
     }),
   ],
+  watch: true,
   mode: 'development',
 };

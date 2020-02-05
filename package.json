@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "build": "webpack --config webpack.config.js"
+    "start:webpack": "webpack --config webpack.config.js",
+    "start:browser-sync": "browser-sync start --proxy http://localhost:3333 --serveStatic 'dist' --files '*.scss, *.njk'",
+    "start": "npm-run-all -p start:*"
   },
   "repository": {
     "type": "git",
@@ -34,12 +36,14 @@
     "sequelize": "^5.21.3"
   },
   "devDependencies": {
+    "browser-sync": "^2.26.7",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.20.1",
     "mini-css-extract-plugin": "^0.9.0",
     "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
+    "npm-run-all": "^4.1.5",
     "sequelize-cli": "^5.5.1",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
