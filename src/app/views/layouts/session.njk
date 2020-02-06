@@ -19,14 +19,15 @@
         <div class="messages__box messages--sucess">{{ message.sucess }}</div>
       {% endif %}
     </div>
-    <header class="session-header container">
+    <header class="session session__header container">
       <a href="/">
         <img src="/assets/logo.png" alt="">
       </a>
     </header>
-    <main class="session-main container">
+
+    <div class="session session__content container">
       {% block content %}{% endblock content %}
-    </main>
+    </div>
 
     <script src="/bundle.js"></script>
   </body>
