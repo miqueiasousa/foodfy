@@ -7,6 +7,8 @@ class User extends Model {
         name: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.STRING,
+        reset_token: DataTypes.STRING,
+        reset_token_expires: DataTypes.STRING,
         is_admin: DataTypes.BOOLEAN,
       },
       {
