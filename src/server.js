@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const path = require('path');
 const nunjucks = require('nunjucks');
 const routes = require('./routes');
+const session = require('./config/session');
 
 require('./database/index');
 
@@ -21,6 +22,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+app.use(session);
 app.use(
   '/files',
   express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
