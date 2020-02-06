@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const nunjucks = require('nunjucks');
+const methodOverride = require('method-override');
 const routes = require('./routes');
 const session = require('./config/session');
 
@@ -22,6 +23,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'dist')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+app.use(methodOverride('_method'));
 app.use(session);
 app.use(
   '/files',
