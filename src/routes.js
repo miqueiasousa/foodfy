@@ -1,6 +1,7 @@
 const { Router } = require('express');
 
 const SessionController = require('./app/controllers/SessionController');
+const ProfileController = require('./app/controllers/ProfileController');
 
 const router = Router();
 
@@ -18,5 +19,8 @@ router.get(
   SessionController.renderResetPassword
 );
 router.post('/admin/users/reset-password', SessionController.resetPassword);
+
+router.get('/admin/profile', ProfileController.index);
+router.put('/admin/profile', ProfileController.update);
 
 module.exports = router;
