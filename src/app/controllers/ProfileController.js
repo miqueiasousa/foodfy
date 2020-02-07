@@ -4,10 +4,10 @@ const User = require('../../models/User');
 class ProfileController {
   static async index(req, res) {
     try {
-      const { userId } = req.session;
+      const { id } = req.session.user;
 
-      const user = await User.findByPk(userId, {
-        attributes: { exclude: ['password'] },
+      const user = await User.findByPk(id, {
+        attributes: ['name', 'email'],
       });
 
       return res.render('profile/index', {
@@ -22,11 +22,11 @@ class ProfileController {
 
   static async update(req, res) {
     try {
-      const { userId } = req.session;
+      const { id } = req.session.user;
       const { name, email, password } = req.body;
 
       const user = await User.findOne({
-        where: { id: userId },
+        where: { id },
       });
 
       const passed = await bcrypt.compare(password, user.password);
@@ -38,7 +38,7 @@ class ProfileController {
           message: { err: 'Senha incorreta' },
         });
 
-      await User.update({ name, email }, { where: { id: userId } });
+      await User.update({ name, email }, { where: { id } });
 
       return res.redirect('/admin/profile');
     } catch (error) {
