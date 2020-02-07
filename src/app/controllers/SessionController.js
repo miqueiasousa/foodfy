@@ -12,9 +12,7 @@ class SessionController {
     try {
       const { email, password } = req.body;
 
-      const user = await User.findOne({
-        where: { email },
-      });
+      const user = await User.findOne({ where: { email } });
 
       if (!user)
         return res.render('session/login', {
@@ -30,10 +28,16 @@ class SessionController {
           message: { err: 'Senha incorreta' },
         });
 
-      req.session.userId = user.id;
+      req.session.user = {
+        id: user.id,
+        isAuthenticated: true,
+        isAdmin: user.is_admin,
+      };
 
-      return res.redirect(`/admin/users/${user.id}`);
+      return res.redirect('/admin/users/profile');
     } catch (error) {
+      req.session.destroy();
+
       res.render('session/login', {
         title: 'Login',
         message: { err: 'Ocorreu um erro, tente novamente' },
@@ -46,12 +50,12 @@ class SessionController {
   static logout(req, res) {
     req.session.destroy(err => {
       if (err)
-        return res.render('/admin', {
+        return res.render('/admin/profile', {
           message: { err: 'Ocorreu um erro, tente novamente' },
         });
-    });
 
-    return res.redirect('/');
+      return res.redirect('/admin/users/login');
+    });
   }
 
   static renderForgotPassword(req, res) {
