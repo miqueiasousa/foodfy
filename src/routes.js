@@ -2,8 +2,10 @@ const { Router } = require('express');
 
 const SessionController = require('./app/controllers/SessionController');
 const ProfileController = require('./app/controllers/ProfileController');
+const UserController = require('./app/controllers/UserController');
 
 const isAuthenticated = require('./app/middleware/isAuthenticated');
+const isAdmin = require('./app/middleware/isAdmin');
 
 const router = Router();
 
@@ -25,5 +27,12 @@ router.use(isAuthenticated);
 
 router.get('/admin/users/profile', ProfileController.index);
 router.put('/admin/users/profile', ProfileController.update);
+
+router.get('/admin/users', UserController.index);
+router.get('/admin/users/:id/edit', isAdmin, UserController.edit);
+router.get('/admin/users/create', isAdmin, UserController.create);
+router.post('/admin/users', isAdmin, UserController.store);
+router.put('/admin/users/:id', isAdmin, UserController.update);
+router.delete('/admin/users/:id', isAdmin, UserController.delete);
 
 module.exports = router;
