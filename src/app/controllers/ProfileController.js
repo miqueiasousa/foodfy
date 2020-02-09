@@ -6,14 +6,11 @@ class ProfileController {
     try {
       const { id } = req.session.user;
 
-      const user = await User.findByPk(id, {
-        attributes: ['name', 'email'],
-      });
+      const user = await User.findByPk(id, { attributes: ['name', 'email'] });
 
       return res.render('profile/index', {
         title: `Bem vindo ${user.name}`,
         user,
-        message: { sucess: 'Login realizado com sucesso' },
       });
     } catch (error) {
       throw Error(error);
@@ -25,10 +22,7 @@ class ProfileController {
       const { id } = req.session.user;
       const { name, email, password } = req.body;
 
-      const user = await User.findOne({
-        where: { id },
-      });
-
+      const user = await User.findByPk(id);
       const passed = await bcrypt.compare(password, user.password);
 
       if (!passed)

@@ -17,7 +17,7 @@ class SessionController {
       if (!user)
         return res.render('session/login', {
           title: 'Login',
-          message: { err: 'Usuário não cadastrado' },
+          message: { err: 'Usuário incorreto' },
         });
 
       const passed = await bcrypt.compare(password, user.password);
@@ -36,8 +36,6 @@ class SessionController {
 
       return res.redirect('/admin/users/profile');
     } catch (error) {
-      req.session.destroy();
-
       res.render('session/login', {
         title: 'Login',
         message: { err: 'Ocorreu um erro, tente novamente' },
@@ -50,7 +48,8 @@ class SessionController {
   static logout(req, res) {
     req.session.destroy(err => {
       if (err)
-        return res.render('/admin/profile', {
+        return res.render('profile/index', {
+          title: 'Bem vindo',
           message: { err: 'Ocorreu um erro, tente novamente' },
         });
 
@@ -59,18 +58,14 @@ class SessionController {
   }
 
   static renderForgotPassword(req, res) {
-    return res.render('session/forgot-password', {
-      title: 'Recuperar senha',
-    });
+    return res.render('session/forgot-password', { title: 'Recuperar senha' });
   }
 
   static async forgotPassword(req, res) {
     try {
       const { email } = req.body;
 
-      const user = await User.findOne({
-        where: { email },
-      });
+      const user = await User.findOne({ where: { email } });
 
       if (!user)
         return res.render('session/forgot-password', {
@@ -78,12 +73,15 @@ class SessionController {
           message: { err: 'Usuário não cadastrado' },
         });
 
-      const reset_token = crypto.randomBytes(20).toString('hex');
+      const token = crypto.randomBytes(20).toString('hex');
       const now = new Date();
-      const reset_token_expires = now.setHours(now.getHours() + 1);
+      const tokenExpires = now.setHours(now.getHours() + 1);
 
       await User.update(
-        { reset_token, reset_token_expires },
+        {
+          reset_token: token,
+          reset_token_expires: tokenExpires,
+        },
         { where: { id: user.id } }
       );
       await mailer.sendMail({
@@ -91,8 +89,9 @@ class SessionController {
         to: email,
         subject: 'Recuperação de senha',
         html: `
-          <h1>Clique no link abaixo para recuperar sua senha</h1>
-          <a href="http://localhost:3333/admin/users/reset-password?token=${reset_token}">Recuperar senha</a>
+          <h1>Clique no link abaixo para recuperar sua senha.</h1>
+          <p>Atenção, o link expira em 1 hora</p>
+          <a href="http://localhost:3333/admin/users/reset-password?token=${token}">Recuperar senha</a>
         `,
       });
 
@@ -119,22 +118,14 @@ class SessionController {
 
   static async resetPassword(req, res) {
     try {
-      let { email, password, token } = req.body;
+      const { email, token } = req.body;
 
-      const user = await User.findOne({
-        where: { email },
-      });
+      const user = await User.findOne({ where: { email } });
 
-      if (!user)
+      if (!user || token !== user.reset_token)
         return res.render('session/reset-password', {
           title: 'Nova senha',
-          message: { err: 'Usuário não cadastrado' },
-        });
-
-      if (token !== user.reset_token)
-        return res.render('session/reset-password', {
-          title: 'Nova senha',
-          message: { err: 'Token inválido' },
+          message: { err: 'Usuário ou token estão incorretos' },
         });
 
       const now = new Date();
@@ -148,7 +139,7 @@ class SessionController {
           },
         });
 
-      password = await bcrypt.hash(password, 8);
+      const password = await bcrypt.hash(req.body.password, 8);
 
       await User.update({ password }, { where: { id: user.id } });
 
