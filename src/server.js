@@ -29,6 +29,11 @@ app.use(
   '/files',
   express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
 );
+app.use((req, res, next) => {
+  res.locals.isAdmin = req.session.user.isAdmin;
+
+  next();
+});
 
 app.use(routes);
 
