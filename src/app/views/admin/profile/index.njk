@@ -1,0 +1,30 @@
+{% extends 'layouts/admin.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard">
+    <header class="dashboard__header">
+      <h1 class="dashboard__title">Bem vindo
+        {{ user.name }}</h1>
+      <button type="submit" form="user-update" class="button">Salvar</button>
+    </header>
+    <form action="/admin/users/profile?_method=PUT" method="post" class="dashboard__form" id="user-update">
+      <div class="field">
+        <label class="field__label" for="name">Nome</label>
+        <input class="field__input" type="text" name="name" value="{{ user.name }}" id="name">
+      </div>
+      <div class="field">
+        <label class="field__label" for="email">Email</label>
+        <input class="field__input" type="email" name="email" value="{{ user.email }}" id="email">
+      </div>
+      <div class="field">
+        <label class="field__label" for="password">Senha</label>
+        <input class="field__input" type="password" name="password" id="password" placeholder="Digite sua senha">
+      </div>
+    </form>
+  </div>
+{% endblock content %}
