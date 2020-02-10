@@ -2,13 +2,13 @@ const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 
 class ProfileController {
-  static async index(req, res) {
+  static async show(req, res) {
     try {
       const { id } = req.session.user;
 
       const user = await User.findByPk(id, { attributes: ['name', 'email'] });
 
-      return res.render('profile/index', {
+      return res.render('admin/profile/index', {
         title: `Bem vindo ${user.name}`,
         user,
       });
@@ -26,7 +26,7 @@ class ProfileController {
       const passed = await bcrypt.compare(password, user.password);
 
       if (!passed)
-        return res.render('profile/index', {
+        return res.render('admin/profile/index', {
           title: `Bem vindo ${user.name}`,
           user: req.body,
           message: { err: 'Senha incorreta' },
@@ -34,9 +34,9 @@ class ProfileController {
 
       await User.update({ name, email }, { where: { id } });
 
-      return res.redirect('/admin/profile');
+      return res.redirect('/admin/users/profile');
     } catch (error) {
-      res.render('profile/index', {
+      res.render('admin/profile/index', {
         title: `Bem vindo`,
         message: { err: 'Ocorreu um erro, tente novamente' },
       });

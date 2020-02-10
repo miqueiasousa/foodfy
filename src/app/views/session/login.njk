@@ -6,9 +6,9 @@
 {% endblock titlePage %}
 
 {% block content %}
-  <div class="session-content">
-    <h1 class="session-content__title f-weight-bold f-size-24px">Iniciar Sessão</h1>
-    <form class="session-content__form" action="/admin/users/login" method="post" id="login">
+  <div class="session">
+    <h1 class="session__title">Iniciar Sessão</h1>
+    <form action="/admin/users/login" method="post" class="session__form" id="login">
       <div class="field">
         <label class="field__label" for="email">Email</label>
         <input class="field__input" type="email" name="email" id="email" placeholder="Digite seu email">
@@ -18,9 +18,9 @@
         <input class="field__input" type="password" name="password" id="password" placeholder="Digite sua senha">
       </div>
     </form>
-    <div class="session-content__action">
-      <a class="color-gray-light f-weight-bold" href="/admin/users/forgot-password">Perdeu a senha?</a>
-      <button class="button-submit" type="submit" value="login" form="login">Acessar</button>
+    <div class="session__menu-action">
+      <a class="link-session" href="/admin/users/forgot-password">Perdeu a senha?</a>
+      <button class="button" type="submit" form="login">Acessar</button>
     </div>
   </div>
 {% endblock content %}

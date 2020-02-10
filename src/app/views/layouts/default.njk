@@ -10,32 +10,32 @@
     <link rel="stylesheet" href="/bundle.css">
   </head>
   <body>
-    <header class="header-container container">
+    <header class="header container">
       <div class="logo">
         <a href="/" class="logo__link">
           <img src="/assets/logo.png" alt="Logo Foodfy">
         </a>
       </div>
-      <div class="menu-primary">
-        <nav>
-          <ul class="menu">
-            <li class="menu__item">
-              <a href="/about">Sobre</a>
-            </li>
-            <li class="menu__item">
-              <a href="/recipes">Receitas</a>
-            </li>
-            <li class="menu__item">
-              <a href="/chefs">Chefs</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+      <nav>
+        <ul class="menu">
+          <li class="menu__item">
+            <a href="/about">Sobre</a>
+          </li>
+          <li class="menu__item">
+            <a href="/recipes">Receitas</a>
+          </li>
+          <li class="menu__item">
+            <a href="/chefs">Chefs</a>
+          </li>
+        </ul>
+      </nav>
     </header>
 
-    {% block content %}{% endblock content %}
+    <main class="container">
+      {% block content %}{% endblock content %}
+    </main>
 
-    <footer class="footer-container">
+    <footer class="footer">
       <div class="container">
         <p>&copy Todos direitos reservados, receitas Foodfy.</p>
       </div>

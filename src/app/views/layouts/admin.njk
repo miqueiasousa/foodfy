@@ -10,32 +10,40 @@
     <link rel="stylesheet" href="/bundle.css">
   </head>
   <body>
-    <header class="header-container--bg">
-      <div class="header-container container">
+    {% if message %}
+      <div class="message {{ 'message--err' if message.err }} {{ 'message--sucess' if message.sucess }}">
+        {{ message.err or message.sucess }}
+      </div>
+    {% endif %}
+    <header class="header--bg-black">
+      <div class="header container">
         <div class="logo">
-          <a href="/admin" class="logo__link">
+          <a href="/admin/users/profile" class="logo__link">
             <img src="/assets/logo-adm.png" alt="Logo Foodfy">
           </a>
         </div>
-        <div class="menu-primary">
-          <nav>
-            <ul class="menu">
-              <li class="menu__item menu__item--admin">
-                <a href="/admin/recipes">RECEITAS</a>
-              </li>
-              <li class="menu__item menu__item--admin">
-                <a href="/admin/chefs">CHEFS</a>
-              </li>
-              <li class="menu__item menu__item--admin">
-                <a href="/admin/users">USUÁRIOS</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
+        <nav class="nav-primary">
+          <ul class="menu">
+            <li class="menu__item menu__item--alter">
+              <a href="/admin/recipes">Minhas Receitas</a>
+            </li>
+            <li class="menu__item menu__item--alter">
+              <a href="/admin/chefs">Chefs</a>
+            </li>
+            <li class="menu__item menu__item--alter">
+              <a href="/admin/users">Usuários</a>
+            </li>
+          </ul>
+          <form action="/admin/users/logout" method="post">
+            <button type="submit" class="button-logout">Sair</button>
+          </form>
+        </nav>
       </div>
     </header>
 
-    {% block content %}{% endblock content %}
+    <main class="container">
+      {% block content %}{% endblock content %}
+    </main>
 
     <script src="/bundle.js"></script>
   </body>

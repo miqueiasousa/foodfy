@@ -30,9 +30,13 @@ app.use(
   express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
 );
 app.use((req, res, next) => {
-  res.locals.isAdmin = req.session.user.isAdmin;
+  if (req.session.user) {
+    res.locals.isAdmin = req.session.user.isAdmin;
 
-  next();
+    return next();
+  }
+
+  return next();
 });
 
 app.use(routes);

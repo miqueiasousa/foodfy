@@ -6,22 +6,22 @@ const mailer = require('../../config/mailer');
 class UserController {
   static async index(req, res) {
     try {
-      const users = await User.findAll({ order: ['created_at', 'DESC'] });
+      const users = await User.findAll({ order: [['created_at', 'DESC']] });
 
-      return res.render('user/index', { title: 'Usuários', users });
+      return res.render('admin/user/index', { title: 'Usuários', users });
     } catch (error) {
       throw Error(error);
     }
   }
 
   static create(req, res) {
-    return res.render('user/create', { title: 'Criar usuário' });
+    return res.render('admin/user/create', { title: 'Criar usuário' });
   }
 
   static async store(req, res) {
     try {
       const { name, email, is_admin } = req.body;
-      const passwordGenerator = crypto.randomBytes(8).toString('hex');
+      const passwordGenerator = crypto.randomBytes(3).toString('hex');
 
       const password = await bcrypt.hash(passwordGenerator, 8);
       const user = await User.create({ name, email, password, is_admin });
@@ -38,7 +38,7 @@ class UserController {
 
       return res.redirect(`/admin/users/${user.id}`);
     } catch (error) {
-      res.render('user/create', {
+      res.render('admin/user/create', {
         title: 'Criar usuário',
         message: { err: 'Ocorreu um erro, tente novamente' },
       });
@@ -47,12 +47,12 @@ class UserController {
     }
   }
 
-  static async edit(req, res) {
+  static async show(req, res) {
     try {
       const { id } = req.params;
       const user = await User.findByPk(id);
 
-      return res.render('user/edit', { title: 'Editar usuário', user });
+      return res.render('admin/user/edit', { title: 'Editar usuário', user });
     } catch (error) {
       throw Error(error);
     }
@@ -62,9 +62,10 @@ class UserController {
     try {
       const { id } = req.params;
       const { name, email } = req.body;
+      const is_admin = req.body.is_admin ? req.body.is_admin : false;
 
       await User.update(
-        { name, email },
+        { name, email, is_admin },
         {
           where: { id },
         }
@@ -72,7 +73,7 @@ class UserController {
 
       return res.redirect(`/admin/users/${id}`);
     } catch (error) {
-      res.render('user/edit', {
+      res.render('admin/user/edit', {
         title: 'Editar usuário',
         message: { err: 'Ocorreu um erro, tente novamente' },
       });

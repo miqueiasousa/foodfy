@@ -9,25 +9,23 @@
 
     <link rel="stylesheet" href="/bundle.css">
   </head>
-  <body style="justify-content: flex-start">
-    <div class="messages">
-      {% if message.err %}
-        <div class="messages__box messages--err">{{ message.err }}</div>
-      {% endif %}
-
-      {% if message.sucess %}
-        <div class="messages__box messages--sucess">{{ message.sucess }}</div>
-      {% endif %}
-    </div>
-    <header class="session session__header container">
-      <a href="/">
-        <img src="/assets/logo.png" alt="">
-      </a>
+  <body>
+    {% if message %}
+      <div class="message {{ 'message--err' if message.err }} {{ 'message--sucess' if message.sucess }}">
+        {{ message.err or message.sucess }}
+      </div>
+    {% endif %}
+    <header class="header--alter container">
+      <div class="logo logo--mg">
+        <a href="/" class="logo__link">
+          <img src="/assets/logo.png" alt="Logo Foodfy">
+        </a>
+      </div>
     </header>
 
-    <div class="session session__content container">
+    <main>
       {% block content %}{% endblock content %}
-    </div>
+    </main>
 
     <script src="/bundle.js"></script>
   </body>
