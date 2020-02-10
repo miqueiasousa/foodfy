@@ -1,0 +1,14 @@
+.header {
+  padding: 1.66rem 0 1.28rem 0;
+  display: flex;
+  align-items: center;
+
+  &--bg-black {
+    background-color: $secondary-color;
+  }
+
+  &--alter {
+    display: flex;
+    justify-content: center;
+  }
+}
