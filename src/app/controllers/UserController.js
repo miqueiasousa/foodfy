@@ -50,6 +50,10 @@ class UserController {
   static async show(req, res) {
     try {
       const { id } = req.params;
+
+      if (id == req.session.user.id)
+        return res.redirect('/admin/users/profile');
+
       const user = await User.findByPk(id);
 
       return res.render('admin/user/edit', { title: 'Editar usuário', user });
@@ -85,6 +89,12 @@ class UserController {
   static async delete(req, res) {
     try {
       const { id } = req.params;
+
+      if (id === req.session.user.id)
+        return res.render('admin/user/edit', {
+          title: 'Editar usuário',
+          message: { err: 'Você não pode deletar sua conta' },
+        });
 
       await User.destroy({ where: { id } });
 

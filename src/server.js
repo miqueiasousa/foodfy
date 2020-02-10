@@ -31,6 +31,7 @@ app.use(
 );
 app.use((req, res, next) => {
   if (req.session.user) {
+    res.locals.userId = req.session.user.id;
     res.locals.isAdmin = req.session.user.isAdmin;
 
     return next();

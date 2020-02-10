@@ -1,4 +1,5 @@
 const Chef = require('../../models/Chef');
+const Recipe = require('../../models/Recipe');
 const File = require('../../models/File');
 
 class ChefController {
@@ -9,7 +10,7 @@ class ChefController {
         include: { association: 'file' },
       });
 
-      return res.render('chefs/index', { title: 'Chefs', chefs });
+      return res.render('admin/chef/index', { title: 'Chefs', chefs });
     } catch (error) {
       throw Error(error);
     }
@@ -20,18 +21,24 @@ class ChefController {
       const { id } = req.params;
 
       const chef = await Chef.findByPk(id, {
-        include: { association: ['recipes', 'file'] },
+        include: [{ association: 'file' }, { association: 'recipes' }],
       });
 
       if (!chef)
-        return res.render('chefs/show', {
+        return res.render('admin/chef/show', {
           title: `Chef`,
           message: { err: 'Chef não encontrado' },
         });
 
-      return res.render('chefs/show', {
+      const recipes = await Recipe.findAll({
+        where: { chef_id: id },
+        include: [{ association: 'chef' }, { association: 'files' }],
+      });
+
+      return res.render('admin/chef/show', {
         title: `Chef ${chef.name}`,
         chef,
+        recipes,
       });
     } catch (error) {
       throw Error(error);
@@ -39,7 +46,7 @@ class ChefController {
   }
 
   static create(req, res) {
-    return res.render('chefs/create', { title: 'Criar chef' });
+    return res.render('admin/chef/create', { title: 'Criar chef' });
   }
 
   static async store(req, res) {
@@ -59,10 +66,31 @@ class ChefController {
     }
   }
 
+  static async edit(req, res) {
+    try {
+      const { id } = req.params;
+
+      const chef = await Chef.findByPk(id);
+
+      if (!chef)
+        return res.render('admin/chef/edit', {
+          title: `Editar chef`,
+          message: { err: 'Chef não encontrado' },
+        });
+
+      return res.render('admin/chef/edit', {
+        title: `Editar chef ${chef.name}`,
+        chef,
+      });
+    } catch (error) {
+      throw Error(error);
+    }
+  }
+
   static async update(req, res) {
     try {
       const { id } = req.params;
-      const { name } = req.body;
+      const { name, file_id } = req.body;
 
       if (req.file) {
         const { originalname, filename } = req.file;

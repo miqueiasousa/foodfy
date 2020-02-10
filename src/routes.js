@@ -1,4 +1,6 @@
 const { Router } = require('express');
+const multer = require('multer');
+const multerConfig = require('./config/multer');
 
 const SessionController = require('./app/controllers/SessionController');
 const ProfileController = require('./app/controllers/ProfileController');
@@ -38,9 +40,20 @@ router.delete('/admin/users/:id', isAdmin, UserController.delete);
 
 router.get('/admin/chefs', ChefController.index);
 router.get('/admin/chefs/create', isAdmin, ChefController.create);
-router.get('/admin/chefs/:id', isAdmin, ChefController.show);
-router.post('/admin/chefs', isAdmin, ChefController.store);
-router.put('/admin/chefs/:id', isAdmin, ChefController.update);
+router.get('/admin/chefs/:id', ChefController.show);
+router.get('/admin/chefs/:id/edit', isAdmin, ChefController.edit);
+router.post(
+  '/admin/chefs',
+  multer(multerConfig).single('file'),
+  isAdmin,
+  ChefController.store
+);
+router.put(
+  '/admin/chefs/:id',
+  multer(multerConfig).single('file'),
+  isAdmin,
+  ChefController.update
+);
 router.delete('/admin/chefs/:id', isAdmin, ChefController.delete);
 
 module.exports = router;

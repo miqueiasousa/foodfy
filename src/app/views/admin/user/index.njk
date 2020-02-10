@@ -22,13 +22,16 @@
           </div>
           {% if isAdmin %}
             <div class="box-user__action">
-              <a href="/admin/users/{{ user.id }}" class="link-dashboard">Editar</a>
-              <button type="submit" form="delete-user-1" class="button-remove">Remover</button>
+              {% if user.id != userId %}
+                <a href="/admin/users/{{ user.id }}" class="link-dashboard">Editar</a>
+                <form action="/admin/users/{{ user.id }}?_method=DELETE" method="post" class="form-delete">
+                  <button type="submit" class="button-remove">Remover</button>
+                </form>
+              {% endif %}
             </div>
           {% endif %}
         </div>
       {% endfor %}
     </main>
-    <form action="/admin/users/{{ user.id }}?_method=DELETE" method="post" id="delete-user-1" class="form-delete"></form>
   </div>
 {% endblock content %}

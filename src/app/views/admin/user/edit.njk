@@ -10,11 +10,13 @@
     <header class="dashboard__header">
       <h1 class="dashboard__title">Atualizar Usuários</h1>
       <div class="dashboard__box-button">
-        <button type="submit" form="delete-user-2" class="button button--bg-red">Deletar</button>
-        <button type="submit" form="create-user" class="button">Salvar</button>
+        {% if user.id != userId %}
+          <button type="submit" form="delete-user-2" class="button button--bg-red">Deletar</button>
+        {% endif %}
+        <button type="submit" form="update-user" class="button">Salvar</button>
       </div>
     </header>
-    <form action="/admin/users/{{ user.id }}?_method=PUT" method="post" class="dashboard__form" id="create-user">
+    <form action="/admin/users/{{ user.id }}?_method=PUT" method="post" class="dashboard__form" id="update-user">
       <div class="field">
         <label class="field__label" for="name">Nome</label>
         <input class="field__input" type="text" name="name" value="{{ user.name }}" id="name" placeholder="Digite o nome completo">
