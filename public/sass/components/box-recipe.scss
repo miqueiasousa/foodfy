@@ -1,0 +1,21 @@
+.box-recipe {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 1.25rem;
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+  }
+
+  &__title {
+    font-size: 1.13em;
+  }
+
+  &__chef {
+    font-size: 0.875em;
+    color: $tertiary-color;
+  }
+}

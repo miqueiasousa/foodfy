@@ -1,0 +1,25 @@
+.box-chef {
+  display: flex;
+  align-items: center;
+
+  &__avatar {
+    margin-right: 1.25rem;
+
+    & img {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-evenly;
+  }
+
+  &__name {
+    font-size: 1.13em;
+  }
+}

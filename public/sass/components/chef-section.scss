@@ -1,0 +1,37 @@
+.chef-section {
+  width: 100%;
+
+  &__chef {
+    margin-bottom: 3.13rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__avatar {
+    margin-bottom: 1.88rem;
+
+    & img {
+      width: 12.5rem;
+      height: 12.5rem;
+      border-radius: 50%;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__name {
+    margin-bottom: 0.25rem;
+    font-weight: 700;
+    font-size: 2.25em;
+  }
+
+  &__recipes-length {
+    font-size: 1.25em;
+    color: $tertiary-color;
+  }
+}
