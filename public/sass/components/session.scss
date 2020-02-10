@@ -1,0 +1,29 @@
+.session {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    margin-bottom: 2.19rem;
+    font-weight: bold;
+    font-size: 1.5em;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+
+    & > .field {
+      margin-bottom: 2.19rem;
+    }
+  }
+
+  &__menu-action {
+    margin-bottom: 2.19rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

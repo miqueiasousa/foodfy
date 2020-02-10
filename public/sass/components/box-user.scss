@@ -1,0 +1,26 @@
+.box-user {
+  &__info {
+    margin-bottom: 1rem;
+
+    & > *:not(:last-child) {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  &__name {
+    font-size: 1.13em;
+  }
+
+  &__email {
+    font-size: 0.875em;
+    color: $tertiary-color;
+  }
+
+  &__action {
+    display: flex;
+
+    & > * {
+      margin-right: 1rem;
+    }
+  }
+}

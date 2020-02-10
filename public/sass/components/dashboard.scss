@@ -1,0 +1,35 @@
+.dashboard {
+  margin-top: 3.13rem;
+
+  &__header {
+    margin-bottom: 4rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 1.5em;
+  }
+
+  &__box-button {
+    display: flex;
+
+    & > *:not(:last-child) {
+      margin-right: 1rem;
+    }
+  }
+
+  &__form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+
+  &__content {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 8rem;
+    row-gap: 3.25rem;
+  }
+}

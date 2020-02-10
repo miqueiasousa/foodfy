@@ -1,0 +1,19 @@
+.button {
+  min-width: 139px;
+  padding: 0.56rem 2.19rem;
+  border-radius: 4px;
+  background-color: hsl(247, 47%, 55%);
+  font-weight: 700;
+  font-size: 1em;
+  color: $primary-color;
+  display: flex;
+  justify-content: center;
+
+  &--bg-gray {
+    background-color: $tertiary-color;
+  }
+
+  &--bg-red {
+    background-color: $err-color;
+  }
+}

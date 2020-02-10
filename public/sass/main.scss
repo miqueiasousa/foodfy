@@ -8,14 +8,20 @@
 
 @import './objects/objects.scss';
 
-@import './components/header-container.scss';
+@import './components/header.scss';
 @import './components/logo.scss';
 @import './components/menu.scss';
-@import './components/footer-container.scss';
-@import './components/session-header.scss';
-@import './components/session-main.scss';
-@import './components/session-form.scss';
-@import './components/form-actions.scss';
+@import './components/footer.scss';
+@import './components/session.scss';
 @import './components/messages.scss';
+@import './components/nav-primary.scss';
+@import './components/button.scss';
+@import './components/button-remove.scss';
+@import './components/button-logout.scss';
+@import './components/dashboard.scss';
+@import './components/field.scss';
+@import './components/link-session.scss';
+@import './components/link-dashboard.scss';
+@import './components/box-user.scss';
 
 @import './trumps/trumps.scss';
