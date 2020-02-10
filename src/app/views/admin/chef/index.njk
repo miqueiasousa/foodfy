@@ -1,0 +1,30 @@
+{% extends 'layouts/admin.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard">
+    <header class="dashboard__header">
+      <h1 class="dashboard__title">Genrenciar Chefs</h1>
+      {% if isAdmin %}
+        <a href="/admin/chefs/create" class="button">Novo</a>
+      {% endif %}
+    </header>
+    <main class="dashboard__content dashboard__content--4-columns">
+      {% for chef in chefs %}
+        <div class="box-chef">
+          <div class="box-chef__avatar">
+            <img src="{{ chef.file.path }}" alt="Avatar do chef {{ chef.name }}">
+          </div>
+          <div class="box-chef__info">
+            <h1 class="box-chef__name">{{ chef.name }}</h1>
+            <a href="/admin/chefs/{{ chef.id }}" class="link">Visualizar</a>
+          </div>
+        </div>
+      {% endfor %}
+    </main>
+  </div>
+{% endblock content %}

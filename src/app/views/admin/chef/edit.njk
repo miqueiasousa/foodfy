@@ -1,0 +1,31 @@
+{% extends 'layouts/admin.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard">
+    <header class="dashboard__header">
+      <h1 class="dashboard__title">Editar Chef</h1>
+      <div class="dashboard__box-button">
+        <button type="submit" form="delete-chef" class="button button--bg-red">Deletar</button>
+        <button type="submit" form="update-chef" class="button">Salvar</button>
+      </div>
+    </div>
+  </header>
+  <form action="/admin/chefs/{{ chef.id }}?_method=PUT" method="post" enctype="multipart/form-data" class="dashboard__form dashboard__form--1-column" id="update-chef">
+    <div class="field">
+      <label class="field__label" for="name">Nome</label>
+      <input class="field__input" type="text" name="name" value="{{ chef.name }}" id="name" placeholder="Digite o nome completo">
+    </div>
+    <div class="field field--file">
+      <span class="field__label">Avatar</span>
+      <label class="button" for="file">Enviar Avatar</label>
+      <input type="file" name="file" value="{{ chef.file_id }}" id="file" accept="image/jpg, image/jpeg, image/pjpeg, image/png, image/gif" class="field__input--file">
+    </div>
+  </form>
+  <form action="/admin/chefs/{{ chef.id }}?_method=DELETE" method="post" id="delete-chef" class="form-delete"></form>
+</div>
+{% endblock content %}

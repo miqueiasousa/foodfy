@@ -1,0 +1,47 @@
+{% extends 'layouts/admin.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard">
+    <header class="dashboard__header">
+      <h1 class="dashboard__title">Chef:
+        {{ chef.name }}</h1>
+      {% if isAdmin %}
+        <a href="/admin/chefs/{{ chef.id }}/edit" class="button">Editar</a>
+      {% endif %}
+    </header>
+    <main class="chef-section">
+      <div class="chef-section__chef">
+        <div class="chef-section__avatar">
+          <img src="{{ chef.file.path }}" alt="Avatar do chef {{ chef.name }}">
+        </div>
+        <div class="chef-section__info">
+          <h1 class="chef-section__name">{{ chef.name }}</h1>
+          <p class="chef-section__recipes-length">{{ chef.recipes | length }}
+            {{ 'receitas' if chef.recipes | length > 1 else 'receita' }}</p>
+        </div>
+      </div>
+      <div class="recipe-section">
+        <h1 class="recipe-section__title">Receitas</h1>
+        <div class="recipe-section__recipes">
+          {% for recipe in recipes %}
+            <div class="box-recipe">
+              <div class="box-recipe__img">
+                <img src="{{ recipe.file[0].path }}" alt="Imagem da receita {{ recipe.title }}">
+              </div>
+              <div class="box-recipe__info">
+                <h1 class="box-recipe__title">{{ recipe.title }}</h1>
+                <p class="box-recipe__chef">{{ recipe.chef.name }}</p>
+                <a href="/admin/recipes/{{ recipe.id }}" class="link">Visualizar</a>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </main>
+  </div>
+{% endblock content %}
