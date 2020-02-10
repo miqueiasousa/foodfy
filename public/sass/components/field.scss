@@ -4,6 +4,10 @@
   flex-direction: column;
   align-items: flex-start;
 
+  &--file input {
+    display: none;
+  }
+
   &--checkbox {
     display: flex;
     align-items: center;

@@ -4,6 +4,7 @@
   &__header {
     margin-bottom: 4rem;
     display: flex;
+    align-items: center;
     justify-content: space-between;
   }
 
@@ -24,6 +25,11 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2.5rem;
+
+    &--1-column {
+      grid-template-columns: 1fr;
+      row-gap: 1.88rem;
+    }
   }
 
   &__content {
@@ -31,5 +37,10 @@
     grid-template-columns: repeat(3, 1fr);
     column-gap: 8rem;
     row-gap: 3.25rem;
+
+    &--4-columns {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.88rem;
+    }
   }
 }

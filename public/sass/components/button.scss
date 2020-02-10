@@ -8,6 +8,7 @@
   color: $primary-color;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 
   &--bg-gray {
     background-color: $tertiary-color;
