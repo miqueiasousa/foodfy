@@ -1,0 +1,32 @@
+{% extends 'layouts/admin.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard">
+    <header class="dashboard__header">
+      <h1 class="dashboard__title">Criar Usuários</h1>
+      <div class="dashboard__box-button">
+        <button type="submit" form="create-user" class="button">Salvar</button>
+        <a href="/admin/users" class="button button--bg-gray">Cancelar</a>
+      </div>
+    </header>
+    <form action="/admin/users" method="post" class="dashboard__form" id="create-user">
+      <div class="field">
+        <label class="field__label" for="name">Nome</label>
+        <input class="field__input" type="text" name="name" id="name" placeholder="Digite o nome completo">
+      </div>
+      <div class="field">
+        <label class="field__label" for="email">Email</label>
+        <input class="field__input" type="email" name="email" id="email" placeholder="Digite o email">
+      </div>
+      <div class="field--checkbox">
+        <input type="checkbox" name="is_admin" value="true" id="is_admin">
+        <label for="is_admin">Administrador</label>
+      </div>
+    </form>
+  </div>
+{% endblock content %}

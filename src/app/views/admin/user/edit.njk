@@ -1,0 +1,33 @@
+{% extends 'layouts/admin.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard">
+    <header class="dashboard__header">
+      <h1 class="dashboard__title">Atualizar Usuários</h1>
+      <div class="dashboard__box-button">
+        <button type="submit" form="delete-user-2" class="button button--bg-red">Deletar</button>
+        <button type="submit" form="create-user" class="button">Salvar</button>
+      </div>
+    </header>
+    <form action="/admin/users/{{ user.id }}?_method=PUT" method="post" class="dashboard__form" id="create-user">
+      <div class="field">
+        <label class="field__label" for="name">Nome</label>
+        <input class="field__input" type="text" name="name" value="{{ user.name }}" id="name" placeholder="Digite o nome completo">
+      </div>
+      <div class="field">
+        <label class="field__label" for="email">Email</label>
+        <input class="field__input" type="email" name="email" value="{{ user.email }}" id="email" placeholder="Digite o email">
+      </div>
+      <div class="field--checkbox">
+        <input type="checkbox" name="is_admin" value="true" id="is_admin" {{ "checked" if user.is_admin }}>
+        <label for="is_admin">Administrador</label>
+      </div>
+    </form>
+    <form ction="/admin/users/{{ user.id }}?_method=DELETE" method="post" id="delete-user-2" class="form-delete"></form>
+  </div>
+{% endblock content %}
