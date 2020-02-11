@@ -1,0 +1,29 @@
+.photos-section {
+  width: 100%;
+
+  &__highlight img {
+    width: 100%;
+    height: 17.5rem;
+    border-radius: 15px;
+    object-fit: cover;
+  }
+
+  &__preview {
+    width: 100%;
+    margin-top: 0.25rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  &__preview-img {
+    margin-left: 0.5rem;
+
+    & img {
+      width: 3.13rem;
+      height: 3.13rem;
+      border-radius: 3.5px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+  }
+}

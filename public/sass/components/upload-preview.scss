@@ -1,0 +1,16 @@
+.upload-preview {
+  display: flex;
+  flex-direction: row;
+
+  &__photo {
+    margin-right: 0.66rem;
+
+    & img {
+      width: 9.13rem;
+      height: 9.13rem;
+      border-radius: 3.5px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+  }
+}
