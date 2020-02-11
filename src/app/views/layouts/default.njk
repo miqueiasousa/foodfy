@@ -16,7 +16,7 @@
           <img src="/assets/logo.png" alt="Logo Foodfy">
         </a>
       </div>
-      <nav>
+      <nav class="nav-primary">
         <ul class="menu">
           <li class="menu__item">
             <a href="/about">Sobre</a>
@@ -28,6 +28,12 @@
             <a href="/chefs">Chefs</a>
           </li>
         </ul>
+        <form action="/recipes/search" method="get">
+          <div class="field-search">
+            <input class="field-search__input" type="text" name="filter" value="{{ filter }}" placeholder="Buscar uma receita">
+            <button type="submit" class="button-small">Buscar</button>
+          </div>
+        </form>
       </nav>
     </header>
 
