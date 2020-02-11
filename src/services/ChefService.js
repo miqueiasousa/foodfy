@@ -5,7 +5,7 @@ class ChefService {
     try {
       const chefs = await Chef.findAll({
         order: [['created_at', 'DESC']],
-        include: { association: 'file' },
+        include: [{ association: 'file' }, { association: 'recipes' }],
       });
 
       return chefs;
