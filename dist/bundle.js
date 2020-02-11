@@ -98,14 +98,14 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _sas
 
 /***/ }),
 
-/***/ "./public/javascript/hide-messages.js":
-/*!********************************************!*\
-  !*** ./public/javascript/hide-messages.js ***!
-  \********************************************/
+/***/ "./public/javascript/add-new-item.js":
+/*!*******************************************!*\
+  !*** ./public/javascript/add-new-item.js ***!
+  \*******************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("const messages = document.querySelectorAll('.messages__box');\r\n\r\nsetTimeout(() => {\r\n  messages.forEach(message => message.remove());\r\n}, 3000);\r\n\n\n//# sourceURL=webpack:///./public/javascript/hide-messages.js?");
+eval("const buttonAdd = document.querySelectorAll('.button-add');\r\n\r\nif (buttonAdd) {\r\n  buttonAdd.forEach(btn =>\r\n    btn.addEventListener('click', event => {\r\n      const field = event.target.parentNode;\r\n      const fieldContainer = field.querySelector('.field__container');\r\n      const fieldItems = field.querySelectorAll('.field__input');\r\n      const newFieldItem = fieldItems[fieldItems.length - 1].cloneNode(true);\r\n\r\n      if (newFieldItem.value === '') return false;\r\n\r\n      newFieldItem.value = '';\r\n\r\n      return fieldContainer.appendChild(newFieldItem);\r\n    })\r\n  );\r\n}\r\n\n\n//# sourceURL=webpack:///./public/javascript/add-new-item.js?");
 
 /***/ }),
 
@@ -117,7 +117,7 @@ eval("const messages = document.querySelectorAll('.messages__box');\r\n\r\nsetTi
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _menu_active__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./menu-active */ \"./public/javascript/menu-active.js\");\n/* harmony import */ var _menu_active__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_menu_active__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _validation_form_login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./validation-form-login */ \"./public/javascript/validation-form-login.js\");\n/* harmony import */ var _validation_form_login__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_validation_form_login__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _hide_messages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./hide-messages */ \"./public/javascript/hide-messages.js\");\n/* harmony import */ var _hide_messages__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_hide_messages__WEBPACK_IMPORTED_MODULE_2__);\n\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./public/javascript/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _menu_active__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./menu-active */ \"./public/javascript/menu-active.js\");\n/* harmony import */ var _menu_active__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_menu_active__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _prevent_delete__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./prevent-delete */ \"./public/javascript/prevent-delete.js\");\n/* harmony import */ var _prevent_delete__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_prevent_delete__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _add_new_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./add-new-item */ \"./public/javascript/add-new-item.js\");\n/* harmony import */ var _add_new_item__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_add_new_item__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _photos_upload_preview__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./photos-upload-preview */ \"./public/javascript/photos-upload-preview.js\");\n/* harmony import */ var _photos_upload_preview__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_photos_upload_preview__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _recipe_gallery__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./recipe-gallery */ \"./public/javascript/recipe-gallery.js\");\n/* harmony import */ var _recipe_gallery__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_recipe_gallery__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _photos_edit__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./photos-edit */ \"./public/javascript/photos-edit.js\");\n/* harmony import */ var _photos_edit__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_photos_edit__WEBPACK_IMPORTED_MODULE_5__);\n/* harmony import */ var _redirect_recipe__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./redirect-recipe */ \"./public/javascript/redirect-recipe.js\");\n/* harmony import */ var _redirect_recipe__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_redirect_recipe__WEBPACK_IMPORTED_MODULE_6__);\n/* harmony import */ var _redirect_chef__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./redirect-chef */ \"./public/javascript/redirect-chef.js\");\n/* harmony import */ var _redirect_chef__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_redirect_chef__WEBPACK_IMPORTED_MODULE_7__);\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\n\n//# sourceURL=webpack:///./public/javascript/index.js?");
 
 /***/ }),
 
@@ -132,14 +132,69 @@ eval("const currentPage = location.pathname;\r\nconst menuItems = document.query
 
 /***/ }),
 
-/***/ "./public/javascript/validation-form-login.js":
+/***/ "./public/javascript/photos-edit.js":
+/*!******************************************!*\
+  !*** ./public/javascript/photos-edit.js ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const photos = document.querySelectorAll('.upload-preview__photo img');\r\n\r\nif (photos) {\r\n  photos.forEach(photo =>\r\n    photo.addEventListener('click', event => {\r\n      const photoDiv = event.target.parentNode;\r\n      const removedFiles = document.querySelector('input[name=removed_files]');\r\n\r\n      removedFiles.value += `${photoDiv.id}, `;\r\n\r\n      return photoDiv.remove();\r\n    })\r\n  );\r\n}\r\n\n\n//# sourceURL=webpack:///./public/javascript/photos-edit.js?");
+
+/***/ }),
+
+/***/ "./public/javascript/photos-upload-preview.js":
 /*!****************************************************!*\
-  !*** ./public/javascript/validation-form-login.js ***!
+  !*** ./public/javascript/photos-upload-preview.js ***!
   \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("const fields = document.querySelectorAll('.session-form__field input');\r\nconst form = document.querySelector('#login');\r\n\r\nform.addEventListener('submit', e => {\r\n  const inputs = [...e.target.elements];\r\n\r\n  for (const { value } of inputs) {\r\n    if (value === '') {\r\n      e.preventDefault();\r\n\r\n      const err = document.createElement('div');\r\n      const message = 'Por favor, preencha todos os campos';\r\n\r\n      err.classList.add('messages__box');\r\n      err.classList.add('messages--err');\r\n      err.innerHTML = message;\r\n\r\n      fields.forEach(field => field.classList.add('is-invalid'));\r\n\r\n      document.querySelector('.messages').appendChild(err);\r\n\r\n      return;\r\n    }\r\n  }\r\n});\r\n\r\nfor (const field of fields) {\r\n  field.addEventListener('invalid', e => {\r\n    e.preventDefault();\r\n\r\n    if (!e.target.validity.valid) {\r\n      if (e.target.name === 'email') {\r\n        const err = document.createElement('div');\r\n        const message = 'Email inválido';\r\n\r\n        err.classList.add('messages__box');\r\n        err.classList.add('messages--err');\r\n        err.innerHTML = message;\r\n\r\n        document.querySelector('.messages').appendChild(err);\r\n      }\r\n\r\n      if (e.target.name === 'password') {\r\n        const err = document.createElement('div');\r\n        const message =\r\n          'A senha deve conter no mínimo 1 letra minúscula, 1 letra maiúscula, 1 número e 6 caracteres';\r\n\r\n        err.classList.add('messages__box');\r\n        err.classList.add('messages--err');\r\n        err.innerHTML = message;\r\n\r\n        document.querySelector('.messages').appendChild(err);\r\n      }\r\n    }\r\n  });\r\n}\r\n\n\n//# sourceURL=webpack:///./public/javascript/validation-form-login.js?");
+eval("class PhotosUploadPreview {\r\n  constructor(limitFiles) {\r\n    this.inputFile = document.querySelector('input[name=files]');\r\n    this.files = [];\r\n    this.limitFiles = limitFiles;\r\n    this.hasLimit = this.hasLimit.bind(this);\r\n    this.getAllFiles = this.getAllFiles.bind(this);\r\n    this.createContainerImg = this.createContainerImg.bind(this);\r\n    this.preview = this.preview.bind(this);\r\n  }\r\n\r\n  hasLimit(files) {\r\n    if (files.length > this.limitFiles) {\r\n      alert(`Envie no máximo ${this.limitFiles} fotos!`);\r\n\r\n      return true;\r\n    }\r\n\r\n    return false;\r\n  }\r\n\r\n  getAllFiles() {\r\n    const dataTransfer = new DataTransfer();\r\n\r\n    this.files.forEach(file => dataTransfer.items.add(file));\r\n\r\n    return dataTransfer.files;\r\n  }\r\n\r\n  createContainerImg(src) {\r\n    const previewContainer = document.querySelector('.upload-preview');\r\n    const container = document.createElement('div');\r\n    const img = document.createElement('img');\r\n\r\n    img.src = src;\r\n\r\n    container.classList.add('upload-preview__photo');\r\n    container.appendChild(img);\r\n    container.addEventListener('click', event => {\r\n      const { target } = event;\r\n      const photo = target.parentNode;\r\n      const photos = Array.from(\r\n        document.querySelectorAll('.upload-preview__photo')\r\n      );\r\n      const index = photos.indexOf(photo);\r\n\r\n      photo.remove();\r\n\r\n      this.files.splice(index, 1);\r\n\r\n      this.inputFile.files = this.getAllFiles();\r\n\r\n      return this.inputFile.files;\r\n    });\r\n\r\n    previewContainer.appendChild(container);\r\n\r\n    return container;\r\n  }\r\n\r\n  preview(event) {\r\n    const { target } = event;\r\n\r\n    if (this.hasLimit(target.files)) {\r\n      target.value = '';\r\n\r\n      return true;\r\n    }\r\n\r\n    Array.from(target.files).forEach(file => {\r\n      const reader = new FileReader();\r\n\r\n      reader.readAsDataURL(file);\r\n      reader.onload = () => this.createContainerImg(reader.result);\r\n\r\n      return this.files.push(file);\r\n    });\r\n  }\r\n}\r\n\r\nconst photosUploadPreview = new PhotosUploadPreview(5);\r\nconst { inputFile, preview } = photosUploadPreview;\r\n\r\nif (inputFile) {\r\n  inputFile.addEventListener('change', event => preview(event));\r\n}\r\n\n\n//# sourceURL=webpack:///./public/javascript/photos-upload-preview.js?");
+
+/***/ }),
+
+/***/ "./public/javascript/prevent-delete.js":
+/*!*********************************************!*\
+  !*** ./public/javascript/prevent-delete.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const formDelete = document.querySelector('.form-delete');\r\n\r\nif (formDelete) {\r\n  formDelete.addEventListener('submit', e => {\r\n    const confirmation = confirm('Você realmente deseja deletar?');\r\n\r\n    if (!confirmation) return e.preventDefault();\r\n  });\r\n}\r\n\n\n//# sourceURL=webpack:///./public/javascript/prevent-delete.js?");
+
+/***/ }),
+
+/***/ "./public/javascript/recipe-gallery.js":
+/*!*********************************************!*\
+  !*** ./public/javascript/recipe-gallery.js ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const images = document.querySelectorAll('.photos-section__preview-img img');\r\n\r\nif (images) {\r\n  images.forEach(img =>\r\n    img.addEventListener('click', event => {\r\n      const highlight = document.querySelector(\r\n        '.photos-section__highlight img'\r\n      );\r\n\r\n      highlight.src = img.getAttribute('src');\r\n    })\r\n  );\r\n}\r\n\n\n//# sourceURL=webpack:///./public/javascript/recipe-gallery.js?");
+
+/***/ }),
+
+/***/ "./public/javascript/redirect-chef.js":
+/*!********************************************!*\
+  !*** ./public/javascript/redirect-chef.js ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const chefs = document.querySelectorAll('.chef-redirect');\r\n\r\nif (chefs) {\r\n  chefs.forEach(chef =>\r\n    chef.addEventListener('click', () => {\r\n      const id = chef.getAttribute('id');\r\n\r\n      location.href = `/chefs/${id}`;\r\n    })\r\n  );\r\n}\r\n\n\n//# sourceURL=webpack:///./public/javascript/redirect-chef.js?");
+
+/***/ }),
+
+/***/ "./public/javascript/redirect-recipe.js":
+/*!**********************************************!*\
+  !*** ./public/javascript/redirect-recipe.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const recipes = document.querySelectorAll('.recipe-redirect');\r\n\r\nif (recipes) {\r\n  recipes.forEach(recipe =>\r\n    recipe.addEventListener('click', () => {\r\n      const id = recipe.getAttribute('id');\r\n\r\n      location.href = `/recipes/${id}`;\r\n    })\r\n  );\r\n}\r\n\n\n//# sourceURL=webpack:///./public/javascript/redirect-recipe.js?");
 
 /***/ }),
 
