@@ -1,3 +1,6 @@
 import './menu-active';
-import './validation-form-login';
-import './hide-messages';
+import './prevent-delete';
+import './add-new-item';
+import './photos-upload-preview';
+import './recipe-gallery';
+import './photos-edit';
