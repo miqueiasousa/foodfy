@@ -1,6 +1,12 @@
 .box-chef {
+  width: 100%;
+  height: 4rem;
   display: flex;
   align-items: center;
+
+  &--pointer {
+    cursor: pointer;
+  }
 
   &__avatar {
     margin-right: 1.25rem;
@@ -22,5 +28,10 @@
 
   &__name {
     font-size: 1.13em;
+  }
+
+  &__total {
+    font-size: 0.875em;
+    color: $tertiary-color;
   }
 }

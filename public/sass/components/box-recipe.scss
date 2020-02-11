@@ -1,4 +1,6 @@
 .box-recipe {
+  width: 100%;
+  height: 5rem;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   column-gap: 1.25rem;
@@ -19,10 +21,15 @@
     color: $tertiary-color;
   }
 
-  &__img img {
+  &__img {
     width: 100%;
     height: 5rem;
-    border-radius: 8.57px;
-    object-fit: cover;
+
+    & img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8.57px;
+      object-fit: cover;
+    }
   }
 }

@@ -10,6 +10,14 @@ body {
   color: $secondary-color;
 }
 
+main {
+  min-height: calc(100vh - (91px + 80px));
+}
+
+footer {
+  margin-top: auto;
+}
+
 body,
 h1,
 h2,
