@@ -1,0 +1,13 @@
+.article-about {
+  margin-bottom: 3.13rem;
+
+  & h2 {
+    margin-top: 1.88rem;
+  }
+
+  & h1,
+  h2,
+  p {
+    margin-bottom: 1.25rem;
+  }
+}
