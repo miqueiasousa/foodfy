@@ -6,6 +6,7 @@ const SessionController = require('./app/controllers/SessionController');
 const ProfileController = require('./app/controllers/ProfileController');
 const UserController = require('./app/controllers/UserController');
 const ChefController = require('./app/controllers/ChefController');
+const RecipeController = require('./app/controllers/RecipeController');
 
 const isAuthenticated = require('./app/middleware/isAuthenticated');
 const isAdmin = require('./app/middleware/isAdmin');
@@ -55,5 +56,21 @@ router.put(
   ChefController.update
 );
 router.delete('/admin/chefs/:id', isAdmin, ChefController.delete);
+
+router.get('/admin/recipes', RecipeController.index);
+router.get('/admin/recipes/create', RecipeController.create);
+router.get('/admin/recipes/:id', RecipeController.show);
+router.get('/admin/recipes/:id/edit', RecipeController.edit);
+router.post(
+  '/admin/recipes',
+  multer(multerConfig).array('files', 5),
+  RecipeController.store
+);
+router.put(
+  '/admin/recipes/:id',
+  multer(multerConfig).array('files', 5),
+  RecipeController.update
+);
+router.delete('/admin/recipes/:id', RecipeController.delete);
 
 module.exports = router;
