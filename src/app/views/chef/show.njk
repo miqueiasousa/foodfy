@@ -1,0 +1,38 @@
+{% extends 'layouts/default.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="chef-section">
+    <div class="chef-section__chef">
+      <div class="chef-section__avatar">
+        <img src="{{ chef.file.path }}" alt="Avatar do chef {{ chef.name }}">
+      </div>
+      <div class="chef-section__info">
+        <h1 class="chef-section__name">{{ chef.name }}</h1>
+        <p class="chef-section__recipes-length">{{ chef.recipes | length }}
+          {{ 'receitas' if chef.recipes | length > 1 else 'receita' }}</p>
+      </div>
+    </div>
+    <div class="recipe-section">
+      <h1 class="recipe-section__title">Receitas</h1>
+      <div class="home-section__recipes recipe-section-alter">
+        {% for recipe in chef.recipes %}
+          <div id="{{ recipe.id }}" class="box-recipe-alter recipe-redirect">
+            <div class="box-recipe-alter__img">
+              <img src="{{ recipe.files[0].path }}" alt="{{ recipe.files[0].name }}">
+            </div>
+            <div class="box-recipe-alter__info">
+              <h1 class="box-recipe-alter__title">{{ recipe.title }}</h1>
+              <p class="box-recipe-alter__author">por
+                {{ recipe.chef.name }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}

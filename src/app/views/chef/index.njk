@@ -1,0 +1,23 @@
+{% extends 'layouts/default.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard__content dashboard__content--4-columns">
+    {% for chef in chefs %}
+      <div id="{{ chef.id }}" class="box-chef box-chef--pointer chef-redirect">
+        <div class="box-chef__avatar">
+          <img src="{{ chef.file.path }}" alt="Avatar do chef {{ chef.name }}">
+        </div>
+        <div class="box-chef__info">
+          <h1 class="box-chef__name">{{ chef.name }}</h1>
+          <p class="box-chef__total">{{ chef.recipes | length }}
+            {{ 'receitas' if chef.recipes | length > 1 else 'receita' }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock content %}
