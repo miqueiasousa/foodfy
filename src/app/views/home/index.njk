@@ -1,0 +1,35 @@
+{% extends 'layouts/default.njk' %}
+
+{% block titlePage %}
+  <title>Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="home-section">
+    <div class="home-section__banner">
+      <div class="text">
+        <h1 class="f-bold">As melhores receitas</h1>
+        <p>Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo todo.</p>
+      </div>
+    </div>
+    <div class="home-section__recipes-highlight">
+      <h1 class="f-bold f-size-24px">Mais acessadas</h1>
+      <div class="home-section__recipes recipe-section-alter">
+        {% for recipe in recipes %}
+          {% if loop.index <= 6 %}
+            <div id="{{ recipe.id }}" class="box-recipe-alter recipe-redirect">
+              <div class="box-recipe-alter__img">
+                <img src="{{ recipe.files[0].path }}" alt="{{ recipe.files[0].name }}">
+              </div>
+              <div class="box-recipe-alter__info">
+                <h1 class="box-recipe-alter__title">{{ recipe.title }}</h1>
+                <p class="box-recipe-alter__author">por
+                  {{ recipe.chef.name }}</p>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}
