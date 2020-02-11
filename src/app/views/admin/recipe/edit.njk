@@ -1,0 +1,76 @@
+{% extends 'layouts/admin.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard">
+    <header class="dashboard__header">
+      <h1 class="dashboard__title">Editar Receita</h1>
+      {% if isAdmin or recipe.user_id == userId %}
+        <div class="dashboard__box-button">
+          <button type="submit" form="delete-recipe" class="button button--bg-red">Deletar</button>
+          <button type="submit" form="update-recipe" class="button">Salvar</button>
+        </div>
+      {% endif %}
+    </div>
+  </header>
+  <form action="/admin/recipes/{{ recipe.id }}?_method=PUT" method="post" enctype="multipart/form-data" class="dashboard__form dashboard__form--1-column" id="update-recipe">
+    <div class="field">
+      <span class="field__label">Images</span>
+      <div class="field--row">
+        <div>
+          <label class="field__label-button" for="files"></label>
+          <input type="file" name="files" id="files" accept="image/jpg, image/jpeg, image/pjpeg, image/png, image/gif" multiple="multiple" class="d-none">
+          <input type="hidden" name="removed_files">
+        </div>
+        <div class="upload-preview">
+          {% for file in recipe.files %}
+            <div id="{{ file.id }}" class="upload-preview__photo">
+              <img src="{{ file.path }}" alt="{{ file.name }}">
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="field">
+      <label class="field__label" for="chef_id">Chef</label>
+      <select name="chef_id" id="chef_id" class="field__input">
+        <option value="">Selecione um chef</option>
+        {% for chef in chefs %}
+          <option value="{{ chef.id }}" {{ 'selected' if chef.id == recipe.chef_id }}>{{ chef.name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="field">
+      <label class="field__label" for="title">Título</label>
+      <input class="field__input" type="text" name="title" value="{{ recipe.title }}" id="title">
+    </div>
+    <div class="field">
+      <label class="field__label" for="ingredients">Ingredientes</label>
+      <div class="field__container">
+        {% for ingredient in recipe.ingredients %}
+          <input class="field__input" type="text" name="ingredients" value="{{ ingredient }}" id="ingredients">
+        {% endfor %}
+      </div>
+      <button type="button" class="button-add">Adicionar novo ingrediente</button>
+    </div>
+    <div class="field">
+      <label class="field__label" for="preparation">Modo de preparo</label>
+      <div class="field__container">
+        {% for preparation in recipe.preparation %}
+          <input class="field__input" type="text" name="preparation" value="{{ preparation }}" id="preparation">
+        {% endfor %}
+      </div>
+      <button type="button" class="button-add">Adicionar novo passo</button>
+    </div>
+    <div class="field">
+      <label class="field__label" for="information">Informações adicionais</label>
+      <textarea class="field__input" name="information" id="information" rows="15">{{ recipe.information }}</textarea>
+    </div>
+  </form>
+  <form action="/admin/recipes/{{ recipe.id }}?_method=DELETE" method="post" id="delete-recipe" class="form-delete"></form>
+</div>
+{% endblock content %}

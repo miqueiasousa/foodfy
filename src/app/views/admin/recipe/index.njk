@@ -1,0 +1,29 @@
+{% extends 'layouts/admin.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Administração Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="dashboard">
+    <header class="dashboard__header">
+      <h1 class="dashboard__title">Genrenciar Receitas</h1>
+      <a href="/admin/recipes/create" class="button">Novo</a>
+    </header>
+    <main class="dashboard__content dashboard__content--2-columns">
+      {% for recipe in recipes %}
+        <div class="box-recipe">
+          <div class="box-recipe__img">
+            <img src="{{ recipe.files[0].path }}" alt="Imagem da receita {{ recipe.title }}">
+          </div>
+          <div class="box-recipe__info">
+            <h1 class="box-recipe__title">{{ recipe.title }}</h1>
+            <p class="box-recipe__chef">{{ recipe.chef.name }}</p>
+            <a href="/admin/recipes/{{ recipe.id }}" class="link-dashboard">Visualizar</a>
+          </div>
+        </div>
+      {% endfor %}
+    </main>
+  </div>
+{% endblock content %}
