@@ -4,8 +4,9 @@
   flex-direction: column;
   align-items: flex-start;
 
-  &--file input {
-    display: none;
+  &--row {
+    display: flex;
+    flex-direction: row;
   }
 
   &--checkbox {
@@ -29,15 +30,37 @@
     font-weight: 700;
   }
 
+  &__label-button {
+    margin-right: 0.66rem;
+    width: 9.13rem;
+    height: 9.13rem;
+    border: 1px solid #ddd;
+    border-radius: 3.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+
+    &::before {
+      content: '+';
+      font-size: 3.5em;
+      color: #777;
+    }
+  }
+
   &__input {
     width: 100%;
     padding: 0.9rem;
     border-radius: 4px;
     border: 1px solid #ddd;
     font-size: 1em;
+  }
 
-    &:invalid {
-      border: 1px solid #ff3131;
+  &__container {
+    width: 100%;
+
+    & input {
+      margin-bottom: 0.63rem;
     }
   }
 }

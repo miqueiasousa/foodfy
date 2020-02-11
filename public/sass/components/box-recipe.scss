@@ -18,4 +18,11 @@
     font-size: 0.875em;
     color: $tertiary-color;
   }
+
+  &__img img {
+    width: 100%;
+    height: 5rem;
+    border-radius: 8.57px;
+    object-fit: cover;
+  }
 }

@@ -1,5 +1,6 @@
 .dashboard {
   margin-top: 3.13rem;
+  margin-bottom: 1.88rem;
 
   &__header {
     margin-bottom: 4rem;
@@ -22,6 +23,7 @@
   }
 
   &__form {
+    margin-bottom: 1.88rem;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 2.5rem;
@@ -41,6 +43,11 @@
     &--4-columns {
       grid-template-columns: repeat(4, 1fr);
       gap: 1.88rem;
+    }
+
+    &--2-columns {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
     }
   }
 }
