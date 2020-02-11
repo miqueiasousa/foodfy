@@ -21,14 +21,14 @@
         </div>
         <div class="chef-section__info">
           <h1 class="chef-section__name">{{ chef.name }}</h1>
-          <p class="chef-section__recipes-length">{{ recipes | length }}
-            {{ 'receitas' if recipes | length > 1 else 'receita' }}</p>
+          <p class="chef-section__recipes-length">{{ chef.recipes | length }}
+            {{ 'receitas' if chef.recipes | length > 1 else 'receita' }}</p>
         </div>
       </div>
       <div class="recipe-section">
         <h1 class="recipe-section__title">Receitas</h1>
         <div class="recipe-section__recipes">
-          {% for recipe in recipes %}
+          {% for recipe in chef.recipes %}
             <div class="box-recipe">
               <div class="box-recipe__img">
                 <img src="{{ recipe.files[0].path }}" alt="Imagem da receita {{ recipe.title }}">

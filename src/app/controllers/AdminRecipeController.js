@@ -2,15 +2,22 @@ const Recipe = require('../../models/Recipe');
 const Chef = require('../../models/Chef');
 const File = require('../../models/File');
 
+const ChefService = require('../../services/ChefService');
+const FileService = require('../../services/FileService');
+const RecipeService = require('../../services/RecipeService');
+const AdminRecipeService = require('../../services/AdminRecipeService');
+
 class RecipeController {
   static async index(req, res) {
     try {
-      const recipes = await Recipe.findAll({
-        include: [{ association: 'chef' }, { association: 'files' }],
-      });
+      const recipes = await RecipeService.findAll();
 
       return res.render('admin/recipe/index', { title: 'Receitas', recipes });
     } catch (error) {
+      res.render('admin/recipe/index', {
+        title: 'Receitas',
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
       throw Error(error);
     }
   }
@@ -19,9 +26,7 @@ class RecipeController {
     try {
       const { id } = req.params;
 
-      const recipe = await Recipe.findByPk(id, {
-        include: [{ association: 'files' }, { association: 'chef' }],
-      });
+      const recipe = await RecipeService.findOne(id);
 
       if (!recipe)
         return res.render('admin/recipe/show', {
@@ -34,13 +39,18 @@ class RecipeController {
         recipe,
       });
     } catch (error) {
+      res.render('admin/recipe/show', {
+        title: 'Receita',
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
 
   static async create(req, res) {
     try {
-      const chefs = await Chef.findAll();
+      const chefs = await ChefService.findAll();
 
       return res.render('admin/recipe/create', {
         title: 'Nova receita',
@@ -53,17 +63,18 @@ class RecipeController {
 
   static async store(req, res) {
     try {
-      const {
-        chef_id,
-        title,
-        ingredients,
-        preparation,
-        information,
-      } = req.body;
+      const { id: user_id } = req.session.user;
+      const { chef_id, title, information } = req.body;
+      let { ingredients, preparation } = req.body;
 
-      const recipe = await Recipe.create({
+      ingredients =
+        typeof ingredients === 'string' ? ingredients.split() : ingredients;
+      preparation =
+        typeof preparation === 'string' ? preparation.split() : preparation;
+
+      const recipe = await AdminRecipeService.createRecipe({
+        user_id,
         chef_id,
-        user_id: req.session.user.id,
         title,
         ingredients,
         preparation,
@@ -73,7 +84,8 @@ class RecipeController {
       await Promise.all(
         req.files.map(async ({ originalname: name, filename }) => {
           const path = `http://${req.headers.host}/files/${filename}`;
-          const file = await File.create({ name, path });
+
+          const file = await FileService.create({ name, path });
 
           return recipe.addFile(file);
         })
@@ -81,6 +93,11 @@ class RecipeController {
 
       return res.redirect(`/admin/recipes/${recipe.id}`);
     } catch (error) {
+      res.render('admin/recipe/create', {
+        title: 'Nova receita',
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -89,9 +106,7 @@ class RecipeController {
     try {
       const { id } = req.params;
 
-      const recipe = await Recipe.findByPk(id, {
-        include: { association: 'files' },
-      });
+      const recipe = await RecipeService.findOne(id);
 
       if (!recipe)
         return res.render('admin/recipe/edit', {
@@ -99,7 +114,7 @@ class RecipeController {
           message: { err: 'Receita não encontrado' },
         });
 
-      const chefs = await Chef.findAll();
+      const chefs = await ChefService.findAll();
 
       return res.render('admin/recipe/edit', {
         title: `Editar receita`,
@@ -107,6 +122,11 @@ class RecipeController {
         chefs,
       });
     } catch (error) {
+      res.render('admin/recipe/edit', {
+        title: `Editar receita`,
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -114,30 +134,30 @@ class RecipeController {
   static async update(req, res) {
     try {
       const { id } = req.params;
-      const { title, ingredients, preparation, information } = req.body;
+      const { chef_id, title, information } = req.body;
+      let { ingredients, preparation } = req.body;
 
-      const recipe = await Recipe.findByPk(id);
+      ingredients =
+        typeof ingredients === 'string' ? ingredients.split() : ingredients;
+      preparation =
+        typeof preparation === 'string' ? preparation.split() : preparation;
 
-      if (!recipe)
-        return res.render('admin/recipe/edit', {
-          title: 'Editar receita',
-          message: { err: 'Receita não encontrada' },
-        });
-
-      await Recipe.update(
-        { title, ingredients, preparation, information },
-        {
-          where: { id },
-        }
-      );
+      const recipe = await AdminRecipeService.updateRecipe(id, {
+        chef_id,
+        title,
+        ingredients,
+        preparation,
+        information,
+      });
 
       if (req.files) {
         await Promise.all(
           req.files.map(async ({ originalname: name, filename }) => {
             const path = `http://${req.headers.host}/files/${filename}`;
-            const file = await File.create({ name, path });
 
-            return recipe.addFile(file);
+            const file = await FileService.create({ name, path });
+
+            recipe.addFile(file);
           })
         );
       }
@@ -149,15 +169,22 @@ class RecipeController {
 
         await Promise.all(
           removedFiles.map(async fileId => {
-            await File.destroy({ where: { id: fileId } });
+            const file = await FileService.findOne(fileId);
 
-            return true;
+            recipe.removeFile(file);
+
+            await file.destroy();
           })
         );
       }
 
       return res.redirect(`/admin/recipes/${id}`);
     } catch (error) {
+      res.render('admin/recipe/edit', {
+        title: 'Editar receita',
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -165,19 +192,19 @@ class RecipeController {
   static async delete(req, res) {
     try {
       const { id } = req.params;
-      const recipe = await Recipe.findByPk(id, {
-        include: { association: 'files' },
-      });
+      const recipe = await RecipeService.findOne(id);
 
       await Promise.all(
-        recipe.files.map(async file => {
-          await File.destroy({ where: { id: file.id } });
+        recipe.files.map(async ({ id: fileId }) => {
+          const file = await FileService.findOne(fileId);
 
-          return true;
+          recipe.removeFile(file);
+
+          await file.destroy();
         })
       );
 
-      recipe.destroy();
+      await AdminRecipeService.deleteRecipe(id);
 
       return res.redirect(`/admin/recipes`);
     } catch (error) {

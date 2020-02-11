@@ -1,7 +1,4 @@
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const User = require('../../models/User');
-const mailer = require('../../config/mailer');
+const SessionService = require('../../services/SessionService');
 
 class SessionController {
   static renderLogin(req, res) {
@@ -12,33 +9,22 @@ class SessionController {
     try {
       const { email, password } = req.body;
 
-      const user = await User.findOne({ where: { email } });
-
-      if (!user)
-        return res.render('session/login', {
-          title: 'Login',
-          message: { err: 'Usuário incorreto' },
-        });
-
-      const passed = await bcrypt.compare(password, user.password);
-
-      if (!passed)
-        return res.render('session/login', {
-          title: 'Login',
-          message: { err: 'Senha incorreta' },
-        });
+      const { id, is_admin } = await SessionService.authenticateUser(
+        email,
+        password
+      );
 
       req.session.user = {
-        id: user.id,
+        id,
         isAuthenticated: true,
-        isAdmin: user.is_admin,
+        isAdmin: is_admin,
       };
 
       return res.redirect('/admin/users/profile');
     } catch (error) {
       res.render('session/login', {
         title: 'Login',
-        message: { err: 'Ocorreu um erro, tente novamente' },
+        message: { err: 'Usuário ou senha estão incorretos' },
       });
 
       throw Error(error);
@@ -65,35 +51,7 @@ class SessionController {
     try {
       const { email } = req.body;
 
-      const user = await User.findOne({ where: { email } });
-
-      if (!user)
-        return res.render('session/forgot-password', {
-          title: 'Recuperar senha',
-          message: { err: 'Usuário não cadastrado' },
-        });
-
-      const token = crypto.randomBytes(20).toString('hex');
-      const now = new Date();
-      const tokenExpires = now.setHours(now.getHours() + 1);
-
-      await User.update(
-        {
-          reset_token: token,
-          reset_token_expires: tokenExpires,
-        },
-        { where: { id: user.id } }
-      );
-      await mailer.sendMail({
-        from: 'Equipe Foodfy <noreply@foodfy.com>',
-        to: email,
-        subject: 'Recuperação de senha',
-        html: `
-          <h1>Clique no link abaixo para recuperar sua senha.</h1>
-          <p>Atenção, o link expira em 1 hora</p>
-          <a href="http://localhost:3333/admin/users/reset-password?token=${token}">Recuperar senha</a>
-        `,
-      });
+      await SessionService.createToken(email);
 
       return res.render('session/forgot-password', {
         title: 'Recuperar senha',
@@ -102,7 +60,7 @@ class SessionController {
     } catch (error) {
       res.render('session/forgot-password', {
         title: 'Recuperar senha',
-        message: { err: 'Ocorreu um erro, tente novamente' },
+        message: { err: 'Usuário não encontrado' },
       });
 
       throw Error(error);
@@ -118,30 +76,15 @@ class SessionController {
 
   static async resetPassword(req, res) {
     try {
-      const { email, token } = req.body;
+      const { token, email, password } = req.body;
 
-      const user = await User.findOne({ where: { email } });
+      const user = await SessionService.resetPassword(token, email, password);
 
-      if (!user || token !== user.reset_token)
+      if (!user)
         return res.render('session/reset-password', {
           title: 'Nova senha',
-          message: { err: 'Usuário ou token estão incorretos' },
+          message: { err: 'Usuário ou token são inválidos' },
         });
-
-      const now = new Date();
-      const expires = now.setHours(now.getHours());
-
-      if (expires > user.reset_token_expires)
-        return res.render('session/reset-password', {
-          title: 'Nova senha',
-          message: {
-            err: 'Token expirado! Solicite uma nova recuperação de senha.',
-          },
-        });
-
-      const password = await bcrypt.hash(req.body.password, 8);
-
-      await User.update({ password }, { where: { id: user.id } });
 
       return res.redirect('/admin/users/login');
     } catch (error) {

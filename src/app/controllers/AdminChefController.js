@@ -1,17 +1,19 @@
-const Chef = require('../../models/Chef');
-const Recipe = require('../../models/Recipe');
-const File = require('../../models/File');
+const ChefService = require('../../services/ChefService');
+const FileService = require('../../services/FileService');
+const AdminChefService = require('../../services/AdminChefService');
 
 class ChefController {
   static async index(req, res) {
     try {
-      const chefs = await Chef.findAll({
-        order: [['created_at', 'DESC']],
-        include: { association: 'file' },
-      });
+      const chefs = await ChefService.findAll();
 
       return res.render('admin/chef/index', { title: 'Chefs', chefs });
     } catch (error) {
+      res.render('admin/chef/index', {
+        title: 'Chefs',
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -20,9 +22,7 @@ class ChefController {
     try {
       const { id } = req.params;
 
-      const chef = await Chef.findByPk(id, {
-        include: { association: 'file' },
-      });
+      const chef = await ChefService.findOne(id);
 
       if (!chef)
         return res.render('admin/chef/show', {
@@ -30,18 +30,16 @@ class ChefController {
           message: { err: 'Chef não encontrado' },
         });
 
-      const recipes = await Recipe.findAll({
-        where: { chef_id: id },
-        include: [{ association: 'chef' }, { association: 'files' }],
-      });
-
-      // return res.send({ chef, recipes });
       return res.render('admin/chef/show', {
         title: `Chef ${chef.name}`,
         chef,
-        recipes,
       });
     } catch (error) {
+      res.render('admin/chef/show', {
+        title: `Chef`,
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -55,14 +53,19 @@ class ChefController {
       const { name } = req.body;
       const { originalname, filename } = req.file;
 
-      const { id: file_id } = await File.create({
+      const fileId = await FileService.create({
         name: originalname,
         path: `http://${req.headers.host}/files/${filename}`,
       });
-      const chef = await Chef.create({ name, file_id });
+      const chef = await AdminChefService.createChef(name, fileId);
 
       return res.redirect(`/admin/chefs/${chef.id}`);
     } catch (error) {
+      res.render('admin/chef/create', {
+        title: 'Criar chef',
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -71,7 +74,7 @@ class ChefController {
     try {
       const { id } = req.params;
 
-      const chef = await Chef.findByPk(id);
+      const chef = await ChefService.findOne(id);
 
       if (!chef)
         return res.render('admin/chef/edit', {
@@ -84,6 +87,11 @@ class ChefController {
         chef,
       });
     } catch (error) {
+      res.render('admin/chef/edit', {
+        title: `Editar chef`,
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -96,18 +104,25 @@ class ChefController {
       if (req.file) {
         const { originalname, filename } = req.file;
 
-        const { id: file_id } = await File.create({
+        const fileId = await FileService.create({
           name: originalname,
           path: `http://${req.headers.host}/files/${filename}`,
         });
 
-        await Chef.update({ name, file_id }, { where: { id } });
+        await AdminChefService.updateChef(id, { name, file_id: fileId });
+
+        return res.redirect(`/admin/chefs/${id}`);
       }
 
-      await Chef.update({ name, file_id }, { where: { id } });
+      await AdminChefService.updateChef(id, { name, file_id });
 
       return res.redirect(`/admin/chefs/${id}`);
     } catch (error) {
+      res.render('admin/chef/edit', {
+        title: `Editar chef`,
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -116,10 +131,15 @@ class ChefController {
     try {
       const { id } = req.params;
 
-      await Chef.destroy({ where: { id } });
+      await AdminChefService.deleteChef(id);
 
       return res.redirect('/admin/chefs');
     } catch (error) {
+      res.render('admin/chef/edit', {
+        title: `Editar chef`,
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }

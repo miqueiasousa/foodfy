@@ -1,12 +1,9 @@
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-const User = require('../../models/User');
-const mailer = require('../../config/mailer');
+const UserService = require('../../services/UserService');
 
 class UserController {
   static async index(req, res) {
     try {
-      const users = await User.findAll({ order: [['created_at', 'DESC']] });
+      const users = await UserService.findAll();
 
       return res.render('admin/user/index', { title: 'Usuários', users });
     } catch (error) {
@@ -21,20 +18,8 @@ class UserController {
   static async store(req, res) {
     try {
       const { name, email, is_admin } = req.body;
-      const passwordGenerator = crypto.randomBytes(3).toString('hex');
 
-      const password = await bcrypt.hash(passwordGenerator, 8);
-      const user = await User.create({ name, email, password, is_admin });
-
-      await mailer.sendMail({
-        from: 'Equipe Foodfy <noreply@foodfy.com>',
-        to: email,
-        subject: 'Cadastro realizado',
-        html: `
-          <p>Olá, você foi cadastrado no Foodfy, para ter acesso a sua conta use a senha: ${passwordGenerator}</p>
-          <a href="http://localhost:3333/admin/users/login">Fazer login</a>
-        `,
-      });
+      const user = await UserService.createUser({ name, email, is_admin });
 
       return res.redirect(`/admin/users/${user.id}`);
     } catch (error) {
@@ -51,13 +36,24 @@ class UserController {
     try {
       const { id } = req.params;
 
-      if (id == req.session.user.id)
+      if (Number(id) === Number(req.session.user.id))
         return res.redirect('/admin/users/profile');
 
-      const user = await User.findByPk(id);
+      const user = await UserService.findOne(id);
+
+      if (!user)
+        return res.render('admin/user/edit', {
+          title: 'Editar usuário',
+          message: { err: 'Usuário não encontrado' },
+        });
 
       return res.render('admin/user/edit', { title: 'Editar usuário', user });
     } catch (error) {
+      res.render('admin/user/edit', {
+        title: 'Editar usuário',
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }
@@ -68,12 +64,7 @@ class UserController {
       const { name, email } = req.body;
       const is_admin = req.body.is_admin ? req.body.is_admin : false;
 
-      await User.update(
-        { name, email, is_admin },
-        {
-          where: { id },
-        }
-      );
+      await UserService.updateUser(id, { name, email, is_admin });
 
       return res.redirect(`/admin/users/${id}`);
     } catch (error) {
@@ -90,16 +81,15 @@ class UserController {
     try {
       const { id } = req.params;
 
-      if (id === req.session.user.id)
-        return res.render('admin/user/edit', {
-          title: 'Editar usuário',
-          message: { err: 'Você não pode deletar sua conta' },
-        });
-
-      await User.destroy({ where: { id } });
+      await UserService.deleteUser(id);
 
       return res.redirect('/admin/users');
     } catch (error) {
+      res.render('admin/user/edit', {
+        title: 'Editar usuário',
+        message: { err: 'Ocorreu um erro, tente novamente' },
+      });
+
       throw Error(error);
     }
   }

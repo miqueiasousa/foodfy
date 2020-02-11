@@ -51,10 +51,12 @@
             {% endfor %}
           </ul>
         </div>
-        <div class="recipe-section__section">
-          <h1>Informações adicionais</h1>
-          <p>{{ recipe.information }}</p>
-        </div>
+        {% if recipe.information != '' %}
+          <div class="recipe-section__section">
+            <h1>Informações adicionais</h1>
+            <p>{{ recipe.information }}</p>
+          </div>
+        {% endif %}
       </div>
     </main>
   </div>
