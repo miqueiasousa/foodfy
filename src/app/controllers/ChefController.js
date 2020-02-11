@@ -21,7 +21,7 @@ class ChefController {
       const { id } = req.params;
 
       const chef = await Chef.findByPk(id, {
-        include: [{ association: 'file' }, { association: 'recipes' }],
+        include: { association: 'file' },
       });
 
       if (!chef)
@@ -35,6 +35,7 @@ class ChefController {
         include: [{ association: 'chef' }, { association: 'files' }],
       });
 
+      // return res.send({ chef, recipes });
       return res.render('admin/chef/show', {
         title: `Chef ${chef.name}`,
         chef,

@@ -21,8 +21,8 @@
         </div>
         <div class="chef-section__info">
           <h1 class="chef-section__name">{{ chef.name }}</h1>
-          <p class="chef-section__recipes-length">{{ chef.recipes | length }}
-            {{ 'receitas' if chef.recipes | length > 1 else 'receita' }}</p>
+          <p class="chef-section__recipes-length">{{ recipes | length }}
+            {{ 'receitas' if recipes | length > 1 else 'receita' }}</p>
         </div>
       </div>
       <div class="recipe-section">
@@ -31,12 +31,12 @@
           {% for recipe in recipes %}
             <div class="box-recipe">
               <div class="box-recipe__img">
-                <img src="{{ recipe.file[0].path }}" alt="Imagem da receita {{ recipe.title }}">
+                <img src="{{ recipe.files[0].path }}" alt="Imagem da receita {{ recipe.title }}">
               </div>
               <div class="box-recipe__info">
                 <h1 class="box-recipe__title">{{ recipe.title }}</h1>
                 <p class="box-recipe__chef">{{ recipe.chef.name }}</p>
-                <a href="/admin/recipes/{{ recipe.id }}" class="link">Visualizar</a>
+                <a href="/admin/recipes/{{ recipe.id }}" class="link-dashboard">Visualizar</a>
               </div>
             </div>
           {% endfor %}
