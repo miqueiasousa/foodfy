@@ -1,0 +1,25 @@
+{% extends 'layouts/default.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="recipe-section-alter">
+    {% for recipe in recipes %}
+      {% if loop.index <= 6 %}
+        <div id="{{ recipe.id }}" class="box-recipe-alter recipe-redirect">
+          <div class="box-recipe-alter__img">
+            <img src="{{ recipe.files[0].path }}" alt="{{ recipe.files[0].name }}">
+          </div>
+          <div class="box-recipe-alter__info">
+            <h1 class="box-recipe-alter__title">{{ recipe.title }}</h1>
+            <p class="box-recipe-alter__author">por
+              {{ recipe.chef.name }}</p>
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+{% endblock content %}

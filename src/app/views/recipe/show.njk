@@ -1,0 +1,54 @@
+{% extends 'layouts/default.njk' %}
+
+{% block titlePage %}
+  <title>{{ title }}
+    - Foodfy</title>
+{% endblock titlePage %}
+
+{% block content %}
+  <div class="recipe-section">
+    <div class="recipe-section__header">
+      <div class="photos-section">
+        <div class="photos-section__highlight">
+          <img src="{{ recipe.files[0].path }}" alt="Images da receita {{ recipe.files[0].name }}">
+        </div>
+        <div class="photos-section__preview">
+          {% for file in recipe.files %}
+            <div class="photos-section__preview-img">
+              <img src="{{ file.path }}" alt="{{ file.name }}">
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="recipe-section__info">
+        <h1>{{ recipe.title }}</h1>
+        <h2>por
+          {{ recipe.chef.name }}</h2>
+      </div>
+    </div>
+    <div class="recipe-section__main">
+      <div class="recipe-section__section">
+        <h1>Ingredientes</h1>
+        <ul>
+          {% for ingredient in recipe.ingredients %}
+            <li>{{ ingredient }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="recipe-section__section">
+        <h1>Modo de preparo</h1>
+        <ul>
+          {% for prep in recipe.preparation %}
+            <li>{{ prep }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% if recipe.information != '' %}
+        <div class="recipe-section__section">
+          <h1>Informações adicionais</h1>
+          <p>{{ recipe.information }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock content %}
