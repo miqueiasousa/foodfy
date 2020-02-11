@@ -1,5 +1,9 @@
 const { Router } = require('express');
 
+const HomeRoute = require('./app/routes/HomeRoute');
+const AboutRoute = require('./app/routes/AboutRoute');
+const RecipeRoutes = require('./app/routes/RecipeRoutes');
+const ChefRoutes = require('./app/routes/ChefRoutes');
 const SessionRoutes = require('./app/routes/SessionRoutes');
 const ProfileRoutes = require('./app/routes/ProfileRoutes');
 const UserRoutes = require('./app/routes/UserRoutes');
@@ -9,6 +13,11 @@ const AdminRecipeRoutes = require('./app/routes/AdminRecipeRoutes');
 const isAuthenticated = require('./app/middleware/isAuthenticated');
 
 const router = Router();
+
+router.use(HomeRoute);
+router.use('/about', AboutRoute);
+router.use('/recipes', RecipeRoutes);
+router.use('/chefs', ChefRoutes);
 
 router.use('/admin/users', SessionRoutes);
 
