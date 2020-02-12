@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "start:webpack": "webpack --config webpack.config.js",
-    "start:browser-sync": "browser-sync start --proxy http://localhost:3333 --serveStatic 'dist' --files '*.scss, *.njk'",
-    "start": "npm-run-all -p start:*"
+    "start": "node src/server.js",
+    "ui:webpack": "webpack --config webpack.config.js",
+    "ui:browser-sync": "browser-sync ui --proxy http://localhost:3333 --serveStatic 'dist' --files '*.scss, *.njk'",
+    "ui": "npm-run-all -p ui:*"
   },
   "repository": {
     "type": "git",
