@@ -55,7 +55,7 @@ Execute o projeto:
 npm start
 ```
 
-Agora, vá até http://localhost:3333
+Agora, acesse http://localhost:3333
 
 Para ter acesso a administração do site, vá até http://localhost:3333/admin/users/login e utilize o seguinte usuário:
 
