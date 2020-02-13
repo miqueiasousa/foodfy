@@ -12,6 +12,10 @@
     criadas por profissionais do mundo todo.
 </p>
 
+<div>
+  <img src="https://s27.aconvert.com/convert/p3r68-cdx67/sy955-ltjyo.gif" alt="demo" height="480">
+</div>
+
 ## 🧐 Sobre
 
 Este projeto faz parte do desafio final do bootcamp online LaunchBase realizado pela Rocketseat, o Foodfy é um site de receitas criadas por profissionais.
