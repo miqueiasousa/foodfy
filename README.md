@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=60px src="https://i.imgur.com/gdRBzDd.png" alt="Project logo"></a>
+ <img width=200px height=60px src=".github/logo.png" alt="Project logo"></a>
 </p>
 
 <h3 align="center">Foodfy</h3>
@@ -11,6 +11,10 @@
     <br> 
     criadas por profissionais do mundo todo.
 </p>
+
+<div align="center">
+  <img src=".github/foodfy.gif" alt="demo" height="480">
+</div>
 
 ## 🧐 Sobre
 
