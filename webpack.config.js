@@ -1,5 +1,6 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const sass = require('sass');
 
 module.exports = {
   entry: path.resolve(__dirname, 'public', 'index.js'),
@@ -21,7 +22,7 @@ module.exports = {
           {
             loader: 'sass-loader',
             options: {
-              implementation: require('sass'),
+              implementation: sass,
             },
           },
         ],
