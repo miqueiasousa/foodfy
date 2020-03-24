@@ -2,19 +2,15 @@
 
 @import './settings/variables.scss';
 
-@import './generic/reset.scss';
-
 @import './base/base.scss';
 
-@import './objects/objects.scss';
-
 @import './components/header.scss';
+@import './components/row.scss';
 @import './components/logo.scss';
-@import './components/menu.scss';
 @import './components/footer.scss';
 @import './components/session.scss';
 @import './components/messages.scss';
-@import './components/nav-primary.scss';
+@import './components/nav-header.scss';
 @import './components/button.scss';
 @import './components/button-remove.scss';
 @import './components/button-add.scss';
@@ -28,6 +24,7 @@
 @import './components/box-chef.scss';
 @import './components/box-recipe.scss';
 @import './components/chef-section.scss';
+@import './components/container.scss';
 @import './components/recipe-section.scss';
 @import './components/upload-preview.scss';
 @import './components/photos-section.scss';
@@ -36,6 +33,5 @@
 @import './components/box-recipe-alter.scss';
 @import './components/recipe-section-alter.scss';
 @import './components/search-section.scss';
-@import './components/field-search.scss';
-
-@import './trumps/trumps.scss';
+@import './components/search-form.scss';
+@import './components/main.scss';
