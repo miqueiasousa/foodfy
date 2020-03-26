@@ -1,0 +1,11 @@
+.row {
+  width: 100%;
+
+  &_bg_gray {
+    background-color: $gray-light;
+  }
+
+  &_bg_black {
+    background-color: $secondary-color;
+  }
+}
