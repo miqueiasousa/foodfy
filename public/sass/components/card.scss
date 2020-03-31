@@ -1,0 +1,31 @@
+.card {
+  &__link {
+    display: flex;
+    flex-direction: column;
+
+    &:visited {
+      color: initial;
+    }
+  }
+
+  &__img {
+    width: 100%;
+    height: 8.75rem;
+    border-radius: 15px;
+    object-fit: cover;
+  }
+
+  &__body {
+    padding: 0.5rem 0;
+  }
+
+  &__title {
+    font-size: 1.13em;
+    line-height: 28px;
+  }
+
+  &__subtitle {
+    font-size: 0.875em;
+    color: $tertiary-color;
+  }
+}
