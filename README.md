@@ -77,4 +77,4 @@ senha: Qwe123
 
 ## 📝 Licença
 
-Este projeto está licenciado sobe Licença MIT - olhe o arquivo LICENSE.md para mais detalhes
+Este projeto está licenciado sobe Licença MIT - olhe o arquivo [LICENSE](LICENSE) para mais detalhes
